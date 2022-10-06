@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <title>SUDOKU</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link type="text/css" media="screen" rel="stylesheet" href="responsive-tables.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js"></script>
+
+</head>
+
+
+
+<body>
+
+  <!-- this is nav bar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navcolor navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="navcolor nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class=" navcolor nav-link" href="#">Awards</a>
+        </li>
+        <li class="nav-item">
+          <a class="navcolor nav-link" href="#">Chllenges </a>
+        </li>
+        <li class="nav-item">
+          <a class="navcolor nav-link" href="#">Blogs </a>
+        </li>
+        <li class="nav-item">
+          <a class=" navcolor nav-link disabled" href="#">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <nav class="app-bar">
+
+    <!-- it is important to put these styles in here because if I do not do that it will not work in javaScript-->
+    <div id="more-option-list" style="visibility: hidden;max-height: 10px;max-width: 40px;min-width: 40px;"
+      class="more-option-list">
+      <button onclick="hintButtonClick()" ripple-color="#003c8f" class="button nav-item vertical-adjust">Hint</button>
+      <button onclick="restartButtonClick()" ripple-color="#003c8f"
+        class="button nav-item vertical-adjust">Restart</button>
+      <button onclick="SurrenderButtonClick()" ripple-color="tomato"
+        class="button nav-item vertical-adjust">Surrender</button>
+    </div>
+    </div>
+
+    <button id="pause-btn" onclick="pauseGameButtonClick()" class="button bar-button more-button">
+      <span id="pause-icon" class="material-icons">pause</span>
+      <span id="pause-text">Pause</span>
+    </button>
+    <button id="check-btn" onclick="checkButtonClick()" class="button bar-button more-button">
+      <span class="material-icons">done_all</span>
+      <span>Check</span>
+    </button>
+    <button id="isunique-btn" style="display: none;" onclick="isUniqueButtonClick();"
+      class="button bar-button more-button">
+      <span class="material-icons">call_split</span>
+      <span>Is unique</span>
+    </button>
+    <button id="solve-btn" style="display: none;" onclick="solveButtonClick()" class="button bar-button more-button">
+      <span class="material-icons">border_color</span>
+      <span>Solve</span>
+    </button>
+
+  </nav>
+
+  <!-- this is for mobile  -->
+  <div id="hamburger-menu" class="hamburger-menu">
+    <nav id="nav-menu" class="nav-menu">
+      <div class="nav-head">
+        <div class="nav-head-img">
+          <img src="https://image.ibb.co/jmuOKn/icon.jpg" art="" />
+        </div>
+        <div class="nav-head-title">Sudoku</div>
+      </div>
+
+    </nav>
+    <div class="nav-menu-blank" onclick="hideHamburgerClick()">
+
+    </div>
+  </div>
+
+  <!-- this does nothing -->
+  <div class="floating">
+    <button onclick="showDialogClick('dialog');" class="button floating-btn vertical-adjust">
+      <span class="material-icons">add</span>
+    </button>
+  </div>
+
+
+  <!-- <div id="dialog" class="dialog">
+    <div id="dialog-box" class="dialog-content">
+      <div class="dialog-header">New game</div>
+
+      <div class="dialog-body">
+        <p>Select game difficulty to get started.</p>
+      <ul>
+          <li class="radio-option">
+            <label for="very-easy">
+              <input id="very-easy" value="very easy" type="radio" name="difficulty"> Easy
+            </label>
+          </li>
+          <li class="radio-option">
+            <label for="easy">
+              <input id="easy" value="easy" type="radio" name="difficulty"> Normal
+            </label>
+          </li>
+          <li class="radio-option">
+            <label for="normal">
+              <input id="normal" value="normal" type="radio" name="difficulty"> Medium
+            </label>
+          </li>
+          <li class="radio-option">
+            <label for="hard">
+              <input id="hard" value="hard" type="radio" name="difficulty"> Hard
+            </label>
+          </li>
+          <li class="radio-option">
+            <label for="very-hard">
+              <input id="very-hard" value="expert" type="radio" name="difficulty"> Insane
+            </label>
+          </li>
+        </ul> 
+      </div>
+
+      <div class="dialog-footer">
+        <button onclick="startGameButtonClick();" ripple-color="#003c8f"
+          class="button dialog-btn vertical-adjust">OK</button>
+        <button onclick="hideDialogButtonClick('dialog');" ripple-color="#202020"
+          class="button dialog-btn vertical-adjust">Cancel</button>
+      </div>
+    </div>
+  </div> -->
+
+
+
+  <!--  ***************for testing purpose only*********************** -->
+  <!-- <button id="clicker" onclick="clicker();">
+    clcik mee
+  </button> -->
+
+  <label class="switch">
+    <input id="checker" type="checkbox" checked>
+    <span class="slider round"></span>
+  </label>
+  
+  <!-- <button onclick="dd()">clcik me</button> -->
+  <!--  ***************for testing purpose only*********************** -->
+
+
+  <!-- this pop up show congraulation message  -->
+  <div id="solved-popUp" class="solved-popUp">
+
+    <div class="popIn">
+
+      <p id="cros" onclick="hidePop()">&times</p>
+      <div>
+        <img src="./assets/img/Gold trophy.png" alt="">
+        <img class="dec-2" src="./assets/img/dec-2.png" alt="">
+
+      </div>
+
+      <h1> Congratulation !!</h1>
+
+      <p>you have completed it in </p>
+      <div id="finTime" class="timer">00:00</div>
+      <div class="timer-2"><i class="fa fa-repeat" aria-hidden="true" onclick="restartGame()"></i>Game will restart in
+        <div id="timeoutDisplayer">
+          1 min
+        </div>
+
+      </div>
+
+      <img class="dec-1" src="./assets/img/decoration-1.png" alt="">
+      <img class="dec-3" src="./assets/img/decoration-1.png" alt="">
+
+    </div>
+  </div>
+
+  <div class="body" id="sudoku">
+    <div class=" responsive card-1 game">
+
+      <div class="card-top">
+        <!-- thiss is drop down list  for game difficulty -->
+        <div  class="dropdown">
+          <button style="background: white;" onclick="dropMenu()" class="dropbtn">Select Your Game: <span><i class="fa fa-sort-amount-asc"
+                aria-hidden="true"></i></span></button>
+          <div id="myDropdown-level" class="dropdown-content">
+            <ul>
+              <li class="radio-option">
+                <label for="very-easy">
+                  <input id="very-easy" value="very easy" type="radio" name="difficulty"
+                    onclick="startGameButtonClick()" checked> Easy
+                </label>
+              </li>
+              <li class="radio-option">
+                <label for="easy">
+                  <input id="easy" value="easy" type="radio" name="difficulty" onclick="startGameButtonClick()"> Normal
+                </label>
+              </li>
+              <li class="radio-option">
+                <label for="normal">
+                  <input id="normal" value="normal" type="radio" name="difficulty" onclick="startGameButtonClick()">
+                  Medium
+                </label>
+              </li>
+              <li class="radio-option">
+                <label for="hard">
+                  <input id="hard" value="hard" type="radio" name="difficulty" onclick="startGameButtonClick()"> Hard
+                </label>
+              </li>
+              <li class="radio-option">
+                <label for="very-hard">
+                  <input id="very-hard" value="expert" type="radio" name="difficulty" onclick="startGameButtonClick()">
+                  Insane
+                </label>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- this show game difficulty -->
+        <div class="timer-22" id="level-show" style="opacity:0;">Default</div>
+        
+
+      </div>
+   
+
+      <!-- onchange="checkInput(this)"  -->
+      <table style="margin-top: 10px;" class="responsive" id="puzzle-grid">
+        <tr>
+          <td>
+            <input type="text">
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1" disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+          <td>
+            <input type="text" maxlength="1"  disabled />
+          </td>
+        </tr>
+
+      </table>
+
+    </div>
+
+    <div class="card-2 ">
+      <!-- <div id="game-number">game #0</div> -->
+      <ul class="game-status">
+        <li>
+          <button class="ng-btn" onclick="startGameButtonClick()">
+            <span class="material-icons">add</span>
+            <span>New game</span>
+          </button>
+        </li>
+        <li>
+          <div class="options">
+            <button 
+            onclick="hintButtonClick()"
+             ripple-color="#003c8f"
+              class="op-btn">
+              <i class="fa fa-eye" aria-hidden="true"></i>
+                Hint
+              </button>
+            <button 
+             onclick="restartButtonClick()"
+              ripple-color="#003c8f"
+              class="op-btn">
+              <i class="fa fa-refresh" aria-hidden="true"></i>
+                Refresh
+              </button>
+            <button 
+             onclick="SurrenderButtonClick()"
+              ripple-color="tomato"
+              class="op-btn">
+              <i class="fa fa-flag-o"aria-hidden="true"></i>
+                Surrender
+              </button>
+            
+          </div>
+        </li>
+        <li>
+          <div class="timer-hold">
+            <div class="vertical-adjust">
+              <span class="material-icons">timer</span>
+              <span id="timer-label">Time</span>
+            </div>
+            <div id="timer" class="timer">00:00</div>
+          </div>
+        </li>
+        <!-- <li>
+          <div class="timer-hold">
+          <div class="vertical-adjust">
+            <span class="material-icons">network_check</span>
+            <span id="game-difficulty-label">Game difficulty</span>
+          </div>
+          <div class="timer" id="level-show">Default</div>
+        </div>
+        </li> -->
+        <li style="text-align: center;">
+          <div class="vertical-adjust">
+            <span class="material-icons">grid_on</span>
+            <span>Remaining numbers</span>
+          </div>
+          <div class="remain-table">
+            <div class="remain-column">
+              <div class="remain-cell">
+                <div class="remain-cell-header">1</div>
+                <div onchange="document.write('Hello');" id="remain-1" class="remain-cell-content">0</div>
+              </div>
+              <div class="remain-cell">
+                <div class="remain-cell-header">4</div>
+                <div id="remain-4" class="remain-cell-content">0</div>
+              </div>
+              <div class="remain-cell">
+                <div class="remain-cell-header">7</div>
+                <div id="remain-7" class="remain-cell-content">0</div>
+              </div>
+            </div>
+            <div class="remain-column">
+              <div class="remain-cell">
+                <div class="remain-cell-header">2</div>
+                <div id="remain-2" class="remain-cell-content">0</div>
+              </div>
+              <div class="remain-cell">
+                <div class="remain-cell-header">5</div>
+                <div id="remain-5" class="remain-cell-content">0</div>
+              </div>
+              <div class="remain-cell">
+                <div class="remain-cell-header">8</div>
+                <div id="remain-8" class="remain-cell-content">0</div>
+              </div>
+            </div>
+            <div class="remain-column">
+              <div class="remain-cell">
+                <div class="remain-cell-header">3</div>
+                <div id="remain-3" class="remain-cell-content">0</div>
+              </div>
+              <div class="remain-cell">
+                <div class="remain-cell-header">6</div>
+                <div id="remain-6" class="remain-cell-content">0</div>
+              </div>
+              <div class="remain-cell">
+                <div class="remain-cell-header">9</div>
+                <div id="remain-9" class="remain-cell-content">0</div>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div style="    margin-left: 50px; display: flex;">
+            <button style="color: #1565c0;font-size: 10px;font-weight: bold;" id="pause-btn"
+              onclick="pauseGameButtonClick()" class="button bar-button  ">
+              <span id="pause-icon" class="material-icons">pause</span>
+              <span id="pause-text">Pause</span>
+            </button>
+            <button style="color: #1565c0;font-size: 10px;font-weight: bold;" id="check-btn"
+              onclick="checkButtonClick()" class="button bar-button  ">
+              <span class="material-icons">done_all</span>
+              <span>Check</span>
+            </button>
+
+
+          </div>
+
+        </li>
+      </ul>
+
+      <!--<button class="option-button">
+                    <span class="material-icons">pause</span>
+                    <span>Pause</span>
+                </button>
+                <button class="option-button">
+                    <span class="material-icons">done_all</span>
+                    <span>Check</span>
+                </button>
+                <button class="option-button">
+                    <span class="material-icons">help</span>
+                    <span>Hint</span>
+                </button>
+                <button class="option-button">
+                    <span class="material-icons">refresh</span>
+                    <span>Restart</span>
+                </button>
+                <button class="option-button">
+                    <span class="material-icons">flag</span>
+                    <span>Surrender</span>
+                </button>
+            -->
+    </div>
+  </div>
+
+
+  <div style="background: #e1e1e1;margin-top: 40px; padding: 35px;">
+    <h1 style="text-align: center;">How To Play</h1>
+
+    <section>
+      <p style="text-align: center;">Lorem ispum is a dummy text dummy text dummy text dummy text dummy text dummy text
+        dummy text dummy text dummy text dummy text
+        dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text
+        dummy text dummy text dummy text dummy text dummy text
+        dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text
+      </p>
+    </section>
+
+
+  </div>
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+  </script>
+  <script type="text/javascript" src="responsive-tables.js"></script>
+</body>
+
+</html>
